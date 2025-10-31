@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <title>Aidan's Coaster Credit Map</title>
+<head>
+  <h1>
+  <a href="https://docs.google.com/spreadsheets/d/11BzhplEo_5IrH1isMsNfliRd9IxTdx_GueukOH_O-JQ/edit?gid=0#gid=0">
+    Aidan's Coaster Credits
+  </a>
+   <link rel="icon" type="image/png" href="img/credit_favicon.png">
+</h1>
+<p style="position:absolute; top:70px; left:45px; background: rgb(222, 222, 222); padding:5px 10px; border:1px solid grey; border-radius:3px; z-index:800;">
+  Select a park or coaster
+</p>
+  
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ Import Lexend from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.0/dist/leaflet.css"/>
+  
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lexend', sans-serif;
+      background-color: whitesmoke;
+      color: #3d3d3d;
+    }
+
+    h1 {
+      position: absolute;
+      margin-top: 0;
+      top: 10px;
+      left: 45px;
+      font-size: 2em;
+      letter-spacing: 0.04em;
+      padding: 10px 15px;
+      background: rgb(222, 222, 222);
+      border: 1px solid grey;
+      border-radius: 3px;
+      z-index: 800;
+    }
+
+    h2 {
+      letter-spacing: 0.04em;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    section {
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      width: 280px;
+      margin: 20px auto;
+      padding: 0 15px;
+      background: rgb(222, 222, 222);
+      border: 1px solid grey;
+      border-radius: 3px;
+      z-index: 800;
+    }
+
+    p {
+      font-size: 0.9em;
+      line-height: 1.5em;
+    }
+
+    a {
+      color: #227d12;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .park-list {
+      max-height: 500px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .park-list::-webkit-scrollbar {
+      width: 8px;
+    }
+    .park-list::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 4px;
+    }
+    .park-list::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+
+  </style>
+
+  <script src="https://unpkg.com/leaflet@1.7.0/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+</head>
+
+<body>
+
+  <h1><a href="https://docs.google.com/spreadsheets/d/11BzhplEo_5IrH1isMsNfliRd9IxTdx_GueukOH_O-JQ/edit?gid=0#gid=0">Aidan's Coaster Credits</a></h1>
+
+  <div id="map"></div>
+
+<script>
+  function goToPark(coords, zoom) {
+    event.preventDefault();
+    map.flyTo(coords, zoom, {
+      animate: true,
+      duration: 3,
+      easeLinearity: 0.25
+    });
+  }
+</script>
+
+<section class="park-list">
+  <h2>SELECT A PARK</h2>
+  <p><a href="#" onclick="goToPark([37.23276770191781, -76.64426855380704], 16)">Busch Gardens Williamsburg</a></p>
+  <p><a href="#" onclick="goToPark([35.10286904364599, -80.94199349453724], 16)">Carowinds</a></p>
+  <p><a href="#" onclick="goToPark([35.79478493771528, -83.53298864864554], 16)">Dollywood</a></p>
+  <p><a href="#" onclick="goToPark([33.49612539205901, -84.42771511223872], 16)">Fun Spot America Atlanta</a></p>
+  <p><a href="#" onclick="goToPark([40.289166570121985, -76.65605304200928], 16)">Hersheypark</a></p>
+  <p><a href="#" onclick="goToPark([37.838280795904424, -77.44416454436661], 16)">Kings Dominion</a></p>
+  <p><a href="#" onclick="goToPark([40.98563656195777, -111.89368485672077], 16)">Lagoon</a></p>
+  <p><a href="#" onclick="goToPark([36.10212959336463, -115.17482823690199], 17)">New York, New York Hotel & Casino</a></p>
+  <p><a href="#" onclick="goToPark([44.40086427504576, -73.84927291484448], 17)">Santa's Workshop</a></p>
+  <p><a href="#" onclick="goToPark([28.41077283173837, -81.46161374258112], 16)">SeaWorld Orlando</a></p>
+  <p><a href="#" onclick="goToPark([29.454824823403207, -98.69897415158009], 16)">SeaWorld San Antonio</a></p>
+  <p><a href="#" onclick="goToPark([38.90857458950681, -76.77478257658701], 16)">Six Flags America</a></p>
+  <p><a href="#" onclick="goToPark([28.47917733449971, -81.46857439096628], 16)">Universal Studios Florida</a></p>
+  <p><a href="#" onclick="goToPark([28.471538317186628, -81.47098837910198], 16)">Universal Studios Islands of Adventure</a></p>
+  <p><a href="#" onclick="goToPark([28.357357303254716, -81.59054661799306], 16)">Walt Disney World - Disney's Animal Kingdom</a></p>
+  <p><a href="#" onclick="goToPark([36.130732686106185, -81.84377001949758], 17)">Wilderness Run Alpine Coaster</a></p>
+</section>
+
+<script>
+  var map = L.map('map').setView([37.23276770191781, -76.64426855380704], 16);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
+  }).addTo(map);
+
+  function highlightFeature(e) {
+    var layer = e.target;
+    layer.setStyle({
+      weight: 3,
+      color: 'blue',
+      fillOpacity: 0.9
+    });
+    layer.bringToFront();
+  }
+
+  function resetHighlight(e) {
+    geojsonLayer.resetStyle(e.target);
+  }
+
+  var geojsonLayer = new L.GeoJSON.AJAX("MyCoasterCredits.geojson", {
+    style: function(feature) {
+      return {
+        color: '#' + feature.properties.color,
+        weight: 3,
+        opacity: 1
+      };
+    },
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng, {
+        radius: 6,
+        fillColor: '#' + feature.properties.color,
+        color: '#' + feature.properties.color,
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8
+      });
+    },
+    onEachFeature: function(feature, layer) {
+      let props = feature.properties;
+
+      // ✅ Color by status
+      let statusColor = "black";
+      if (props.status === "OPERATING") statusColor = "green";
+      else if (props.status === "CLOSING") statusColor = "orange";
+      else if (props.status === "DEFUNCT") statusColor = "red";
+
+      // ✅ Popup HTML
+      let popupContent = `
+        <div style="font-family: 'Lexend', sans-serif; line-height: 1.4em;">
+          <strong>
+            <a href="${props.rcdb}" target="_blank" style="color: blue; text-decoration: none;">
+              ${props.coaster}
+            </a>
+          </strong><br>
+          <strong>${props.park}</strong><br>
+          <span style="color: black;">${props.make}</span><br>
+          <span style="color: black;">${props.model}</span><br>
+          <span style="color: black;">Opened ${props.opened}</span><br>
+          <span style="color: black;">${props.height} ft tall</span><br>
+          <span style="color: black;">${props.speed} mph</span><br>
+          <span style="color: black;">${props.length} ft long</span><br>
+          <span style="color: black;">${props.inversions} Inversions</span><br>
+          <span style="color: ${statusColor}; font-weight: bold;">${props.status}</span>
+        </div>
+      `;
+
+      layer.bindPopup(popupContent);
+
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight
+      });
+    }
+  }).addTo(map);
+</script>
+
+</body>
+</html>
