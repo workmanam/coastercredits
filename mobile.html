@@ -140,6 +140,7 @@
         padding: 5px 8px !important;
       }
 
+      /* Collapsible park menu */
       section {
         left: 8px;
         right: 8px;
@@ -147,36 +148,53 @@
         width: auto;
         box-sizing: border-box;
         margin: 0;
-        padding: 8px 12px;
-        max-height: 30vh;
-        max-height: 30dvh;
-        overflow-y: auto;
+        padding: 0 12px;
+        max-height: 45vh;
+        max-height: 45dvh;
+        overflow: hidden;
         background: rgba(222, 222, 222, 0.96);
-      }
-
-      .park-list {
-        max-height: none;
-        overflow: visible;
-        border: none;
-        padding: 0 5px 5px 5px;
+        border-radius: 8px;
       }
 
       section h2 {
-        font-size: 1em;
-        margin: 5px 0 8px 0;
+        font-size: 0.95em;
+        margin: 0;
+        padding: 12px 4px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
-      section p {
+      .park-list {
+        max-height: 0;
+        overflow-y: auto;
+        border: none;
+        padding: 0 5px;
+      }
+
+      .park-list p {
         font-size: 0.85em;
         margin: 0;
-        padding: 7px 0;
+        padding: 8px 0;
         line-height: 1.4em;
         border-bottom: 1px solid #ccc;
       }
 
-      section a {
+      .park-list a {
         display: block;
-        padding: 2px 0;
+        padding: 3px 0;
+      }
+
+      section.expanded {
+        max-height: 45vh;
+        max-height: 45dvh;
+      }
+
+      section.expanded .park-list {
+        max-height: calc(45vh - 45px);
+        max-height: calc(45dvh - 45px);
+        overflow-y: auto;
       }
 
       a {
@@ -223,32 +241,53 @@
         easeLinearity: 0.25
       });
 
+      // Close park list on mobile
+      if (window.innerWidth <= 700) {
+        document.getElementById('parkList').classList.remove('expanded');
+        document.getElementById('parkArrow').textContent = '▲';
+      }
+
       return false;
+    }
+
+    function toggleParkList() {
+      var panel = document.getElementById('parkList');
+      var arrow = document.getElementById('parkArrow');
+
+      panel.classList.toggle('expanded');
+
+      arrow.textContent = panel.classList.contains('expanded') ? '▼' : '▲';
     }
   </script>
 
-  <section class="park-list">
-    <h2>SELECT A PARK</h2>
+  <section id="parkList">
+    <h2 onclick="toggleParkList()">
+      SELECT A PARK
+      <span id="parkArrow">▲</span>
+    </h2>
 
-    <p><a href="#" onclick="return goToPark([37.23276770191781, -76.64426855380704], 16.5)">Busch Gardens Williamsburg</a></p>
-    <p><a href="#" onclick="return goToPark([35.10286904364599, -80.94199349453724], 16.5)">Carowinds</a></p>
-    <p><a href="#" onclick="return goToPark([41.48498056884504, -82.68577178267073], 15.5)">Cedar Point</a></p>
-    <p><a href="#" onclick="return goToPark([40.15463183856702, -83.11956894014438], 17)">Columbus Zoo and Aquarium</a></p>
-    <p><a href="#" onclick="return goToPark([35.795943925037534, -83.5325936775927], 16.5)">Dollywood</a></p>
-    <p><a href="#" onclick="return goToPark([33.49720460368746, -84.42789141170032], 17.5)">Fun Spot America Atlanta</a></p>
-    <p><a href="#" onclick="return goToPark([40.289166570121985, -76.65605304200928], 16)">Hersheypark</a></p>
-    <p><a href="#" onclick="return goToPark([37.838280795904424, -77.44416454436661], 16.5)">Kings Dominion</a></p>
-    <p><a href="#" onclick="return goToPark([40.9858931385335, -111.89387857668548], 17)">Lagoon</a></p>
-    <p><a href="#" onclick="return goToPark([36.10212959336463, -115.17482823690199], 18)">New York, New York Hotel & Casino</a></p>
-    <p><a href="#" onclick="return goToPark([44.40086427504576, -73.84927291484448], 17)">Santa's Workshop</a></p>
-    <p><a href="#" onclick="return goToPark([28.410017897406025, -81.46167811559496], 17)">SeaWorld Orlando</a></p>
-    <p><a href="#" onclick="return goToPark([29.454824823403207, -98.69897415158009], 17)">SeaWorld San Antonio</a></p>
-    <p><a href="#" onclick="return goToPark([38.90826546154579, -76.77599427382606], 17)">Six Flags America</a></p>
-    <p><a href="#" onclick="return goToPark([28.4774498988147, -81.46879060672676], 17)">Universal Studios Florida</a></p>
-    <p><a href="#" onclick="return goToPark([28.47176584468392, -81.4715600102858], 17)">Universal Studios Islands of Adventure</a></p>
-    <p><a href="#" onclick="return goToPark([28.357357303254716, -81.59054661799306], 16.5)">Walt Disney World - Disney's Animal Kingdom</a></p>
-    <p><a href="#" onclick="return goToPark([36.13103105932963, -81.84349914520345], 18)">Wilderness Run Alpine Coaster</a></p>
+    <div class="park-list">
 
+      <p><a href="#" onclick="return goToPark([37.23276770191781, -76.64426855380704], 16.5)">Busch Gardens Williamsburg</a></p>
+      <p><a href="#" onclick="return goToPark([35.10286904364599, -80.94199349453724], 16.5)">Carowinds</a></p>
+      <p><a href="#" onclick="return goToPark([41.48498056884504, -82.68577178267073], 15.5)">Cedar Point</a></p>
+      <p><a href="#" onclick="return goToPark([40.15463183856702, -83.11956894014438], 17)">Columbus Zoo and Aquarium</a></p>
+      <p><a href="#" onclick="return goToPark([35.795943925037534, -83.5325936775927], 16.5)">Dollywood</a></p>
+      <p><a href="#" onclick="return goToPark([33.49720460368746, -84.42789141170032], 17.5)">Fun Spot America Atlanta</a></p>
+      <p><a href="#" onclick="return goToPark([40.289166570121985, -76.65605304200928], 16)">Hersheypark</a></p>
+      <p><a href="#" onclick="return goToPark([37.838280795904424, -77.44416454436661], 16.5)">Kings Dominion</a></p>
+      <p><a href="#" onclick="return goToPark([40.9858931385335, -111.89387857668548], 17)">Lagoon</a></p>
+      <p><a href="#" onclick="return goToPark([36.10212959336463, -115.17482823690199], 18)">New York, New York Hotel & Casino</a></p>
+      <p><a href="#" onclick="return goToPark([44.40086427504576, -73.84927291484448], 17)">Santa's Workshop</a></p>
+      <p><a href="#" onclick="return goToPark([28.410017897406025, -81.46167811559496], 17)">SeaWorld Orlando</a></p>
+      <p><a href="#" onclick="return goToPark([29.454824823403207, -98.69897415158009], 17)">SeaWorld San Antonio</a></p>
+      <p><a href="#" onclick="return goToPark([38.90826546154579, -76.77599427382606], 17)">Six Flags America</a></p>
+      <p><a href="#" onclick="return goToPark([28.4774498988147, -81.46879060672676], 17)">Universal Studios Florida</a></p>
+      <p><a href="#" onclick="return goToPark([28.47176584468392, -81.4715600102858], 17)">Universal Studios Islands of Adventure</a></p>
+      <p><a href="#" onclick="return goToPark([28.357357303254716, -81.59054661799306], 16.5)">Walt Disney World - Disney's Animal Kingdom</a></p>
+      <p><a href="#" onclick="return goToPark([36.13103105932963, -81.84349914520345], 18)">Wilderness Run Alpine Coaster</a></p>
+
+    </div>
   </section>
 
   <script>
