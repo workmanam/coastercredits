@@ -51,18 +51,6 @@
       z-index: 1;
     }
 
-    .leaflet-pane {
-      z-index: auto;
-    }
-
-    .leaflet-overlay-pane {
-      z-index: 400;
-    }
-
-    .leaflet-marker-pane {
-      z-index: 600;
-    }
-
     section {
       position: absolute;
       bottom: 0;
@@ -304,11 +292,13 @@
 
     function highlightFeature(e) {
       var layer = e.target;
+
       layer.setStyle({
         weight: 3,
         color: 'blue',
         fillOpacity: 0.9
       });
+
       layer.bringToFront();
     }
 
@@ -317,17 +307,24 @@
     }
 
     var geojsonLayer = new L.GeoJSON.AJAX("MyCoasterCreditsSmooth.geojson", {
+
       style: function(feature) {
         return {
           color: '#' + feature.properties.color,
-          weight: 3,
+
+          // Thicker coaster lines on mobile
+          weight: window.innerWidth <= 700 ? 7 : 3,
+
           opacity: 1
         };
       },
 
       pointToLayer: function(feature, latlng) {
         return L.circleMarker(latlng, {
-          radius: 6,
+
+          // Larger coaster markers on mobile
+          radius: window.innerWidth <= 700 ? 10 : 6,
+
           fillColor: '#' + feature.properties.color,
           color: '#' + feature.properties.color,
           weight: 2,
@@ -363,20 +360,29 @@
           </div>
         `;
 
-        layer.bindPopup(popupContent);
-
-        layer.on({
-          mouseover: highlightFeature,
-          mouseout: resetHighlight
+        // Bind popup to feature (click on desktop, tap on mobile)
+        layer.bindPopup(popupContent, {
+          maxWidth: 280,
+          autoPan: true,
+          autoPanPadding: [20, 20]
         });
+
+        // Desktop hover interaction only
+        if (!L.Browser.touch) {
+          layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight
+          });
+        }
+
       }
+
     }).addTo(map);
 
-    // Ensure map and GeoJSON features render correctly on mobile
+    // Ensure map and GeoJSON features render correctly
     geojsonLayer.on('data:loaded', function() {
       setTimeout(function() {
         map.invalidateSize(true);
-        geojsonLayer.bringToFront();
       }, 300);
     });
 
